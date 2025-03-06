@@ -4,7 +4,7 @@
         <parameter name="interval">10</parameter>
         <parameter name="sequential">true</parameter>
         <parameter name="coordination">true</parameter>
-        <parameter name="bootstrap.servers">localhost:24903</parameter>
+        <parameter name="bootstrap.servers">$SYSTEM:KAFKA_ENDPOINT</parameter>
         <parameter name="topic.name">tous-delivery</parameter>
         <parameter name="group.id">group1</parameter>
         <parameter name="contentType">application/json</parameter>
@@ -27,13 +27,13 @@
         <parameter name="retry.backoff.ms">100</parameter>
         <parameter name="connections.max.idle.ms">540000</parameter>
         <parameter name="security.protocol">SSL</parameter>
-        <parameter name="ssl.keystore.location">/Users/ramindu/wso2/mi/kafka/wso2carbon.jks</parameter>
+        <parameter name="ssl.keystore.location">$SYSTEM:KEY_STORE_PATH</parameter>
         <parameter name="ssl.keystore.password">wso2carbon</parameter>
         <parameter name="ssl.key.password">wso2carbon</parameter>
-        <parameter name="ssl.truststore.location">/Users/ramindu/wso2/mi/kafka/client-truststore.jks</parameter>
+        <parameter name="ssl.truststore.location">$SYSTEM:TRUST_STORE_PATH</parameter>
         <parameter name="ssl.truststore.password">wso2carbon</parameter>
         <parameter name="metrics.num.samples">2</parameter>
         <parameter name="metrics.recording.level">INFO</parameter>
         <parameter name="metrics.sample.window.ms">30000</parameter>
     </parameters>
-</inboundEndpoint>
+</inboundEndpoint> 
