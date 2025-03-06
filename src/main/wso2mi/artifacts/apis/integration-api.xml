@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/integration-api" name="integration-api" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/enhance_and_add_to_purchased_q">
+        <inSequence>
+            <sequence key="service_chain_to_get_item_info_seq"/>
+            <respond description="200 OK Response"/>
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+    <resource methods="POST" uri-template="/add_purchase">
+        <inSequence>
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>

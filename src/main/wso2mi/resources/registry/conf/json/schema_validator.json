@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "orders": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "properties": {
+              "order": { 
+                  "type": "object", 
+                  "properties": { 
+                    "id": { "type": "string" },
+                 	 	"title": {"type": "string"},
+                  	"price": { "type": "number" },
+                 		"department": { "type": "object", 
+							          "properties": {  
+							            "name": {"type": "string"},
+							            "location": { "type": "string"}},
+                    		"required": [ "name","location" ]
+                  		}
+                },
+                "required": ["id", "title", "price","department"]
+              }
+            },
+            "required": ["order"]
+          }
+        ]
+      }
+    },
+    "required": [
+      "orders"
+    ]
+  }

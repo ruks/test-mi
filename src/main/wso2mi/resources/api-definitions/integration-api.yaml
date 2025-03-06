@@ -1,0 +1,48 @@
+openapi: 3.0.1
+info:
+  title: integration-api
+  description: API Definition of integration-api
+  version: 1.0.0
+servers:
+- url: http://localhost:8290/integration-api
+paths:
+  /enhance_and_add_to_purchased_q:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+          application/xml:
+            schema:
+              type: object
+              xml:
+                name: payload
+        required: false
+      responses:
+        default:
+          description: Default response
+  /add_purchase:
+    post:
+      requestBody:
+        description: Sample Payload
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: object
+          application/xml:
+            schema:
+              type: object
+              xml:
+                name: payload
+        required: false
+      responses:
+        default:
+          description: Default response

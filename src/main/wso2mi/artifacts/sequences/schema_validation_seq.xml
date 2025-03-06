@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="schema_validation_seq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log level="custom">
+    <property name="message" value="Processing request in schema validation"/>
+    </log>
+    <validate cache-schema="true">
+        <schema key="conf:/json/schema_validator.json"/>
+        <on-fail>
+            <log level="custom">
+                <property name="message" value="Validation failed"/>
+            </log>
+            <payloadFactory media-type="json" template-type="default">
+                <format>
+                        {
+                            "Error":"$1",
+                            "Error Details" : "$2"
+                        }
+                </format>
+                <args>
+                    <arg expression="$ctx:ERROR_MESSAGE" evaluator="xml"/>
+                    <arg expression="$ctx:ERROR_DETAIL" evaluator="xml"/>
+                </args>
+            </payloadFactory>
+            <property name="HTTP_SC" value="500" scope="axis2"/>
+            <respond/>
+        </on-fail>
+    </validate>
+    <send>
+        <endpoint>
+            <http method="post" uri-template="http://localhost:9091/ecom/rest/addPurchase"/>
+        </endpoint>
+    </send>
+    <respond/>
+</sequence>

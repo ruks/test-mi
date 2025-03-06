@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="service_chain_to_get_item_info_seq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <log category="INFO" logMessageID="false" logFullPayload="true">
+        <message></message>
+    </log>
+    <property name="REST_URL_POSTFIX" scope="axis2" action="remove"/>
+    <property name="uri.var.itemId" scope="default" type="STRING" expression="$url:itemId"/>
+    <property expression="json-eval($.ItemsOrdered)" name="ItemsOrdered" scope="default" type="STRING"/>
+    <call>
+        <endpoint key="GetItemByItemId"/>
+    </call>
+    <property expression="json-eval($.departmentName)" name="uri.var.departmentName" scope="default" type="STRING"/>
+    <property expression="json-eval($.sellerId)" name="sellerId" scope="default" type="STRING"/>
+    <property expression="json-eval($.ID)" name="idValue" scope="default" type="STRING"/>
+    <property expression="json-eval($.Title)" name="titleValue" scope="default" type="STRING"/>
+    <property expression="json-eval($.Price)" name="priceValue" scope="default" type="STRING"/>
+      <call blocking="true">
+        <endpoint key="GetDepartmentByName"/>
+    </call>
+    <payloadFactory media-type="json">
+      <format>
+            {
+            "id": "$1",
+            "title": "$2",
+            "price": "$3",
+            "ItemsOrdered": "$4",
+            "department": {
+            "name": "$5",
+            "location": "$6"
+            }
+            }
+        </format>
+      <args>
+            <arg evaluator="xml" expression="$ctx:idValue"/>
+            <arg evaluator="xml" expression="$ctx:titleValue"/>
+            <arg evaluator="xml" expression="$ctx:priceValue"/>
+            <arg evaluator="xml" expression="$ctx:ItemsOrdered"/>
+            <arg evaluator="json" expression="$.departmentName"/>
+            <arg evaluator="json" expression="$.location"/>
+        </args>
+    </payloadFactory>
+    <log level="full"/>
+<kafkaTransport.publishMessages configKey="SecureChoreoKafkaConnection">
+    <topic >tous-purchased</topic>
+    <partitionNo >0</partitionNo>
+    <contentType ></contentType>
+    <key ></key>
+    <keySchema ></keySchema>
+    <keySchemaId ></keySchemaId>
+    <valueSchema ></valueSchema>
+    <valueSchemaId ></valueSchemaId>
+    <keySchemaSubject ></keySchemaSubject>
+    <keySchemaVersion ></keySchemaVersion>
+    <keySchemaSoftDeleted >false</keySchemaSoftDeleted>
+    <valueSchemaSubject ></valueSchemaSubject>
+    <valueSchemaVersion ></valueSchemaVersion>
+    <valueSchemaSoftDeleted >false</valueSchemaSoftDeleted>
+    <value ></value>
+</kafkaTransport.publishMessages>
+</sequence>
